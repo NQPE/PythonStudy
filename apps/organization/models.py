@@ -24,7 +24,25 @@ class CourseOrg(models.Model):
     click_nums = models.IntegerField(verbose_name=u'机构点击数', default=0)
     image = models.ImageField(upload_to='org/%y/%m', verbose_name=u'封面图片', max_length=256)
     address = models.CharField(max_length=150, verbose_name=u'机构地址')
-    city = models.ForeignKey(CityDict, verbose_name=u'城市外键')
+    city = models.ForeignKey(CityDict, verbose_name=u'城市')
+    add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
+
+    class Meta:
+        verbose_name = u'课程机构'
+        verbose_name_plural = verbose_name
 
 
+class Teacher(models.Model):
+    org=models.ForeignKey(CourseOrg,verbose_name=u'所属机构')
+    name = models.CharField(max_length=50, verbose_name=u'教师姓名')
+    work_company = models.CharField(max_length=100, verbose_name=u'就职公司')
+    work_position = models.CharField(max_length=50, verbose_name=u'公司职位')
+    work_years = models.IntegerField(default=0, verbose_name=u'工作年限')
+    points = models.CharField(max_length=100, verbose_name=u'教学特点')
+    click_nums = models.IntegerField(verbose_name=u'点击数', default=0)
+    fav_nums = models.IntegerField(verbose_name=u'收藏人数', default=0)
+    add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
 
+    class Meta:
+        verbose_name = u'教师'
+        verbose_name_plural = verbose_name

@@ -10,7 +10,7 @@ class Course(models.Model):
     name = models.CharField(max_length=100, verbose_name=u'课程名称', default=u'')
     desc = models.CharField(max_length=300, verbose_name=u'课程描述', default=u'')
     detail = models.TextField(verbose_name=u'课程详情')
-    degree = models.IntegerField(choices=((0, u"初级"), (1, u"中级"), (2, u"高级")), verbose_name=u'难度')
+    degree = models.IntegerField(choices=((0, u"初级"), (1, u"中级"), (2, u"高级")), verbose_name=u'课程难度')
     learn_times = models.IntegerField(verbose_name=u'学习时长(分钟数)', default=0)
     learn_nums = models.IntegerField(verbose_name=u'学习人数', default=0)
     fav_nums = models.IntegerField(verbose_name=u'收藏人数', default=0)
@@ -22,9 +22,11 @@ class Course(models.Model):
         verbose_name = u'课程'
         verbose_name_plural = verbose_name
 
+    def __unicode__(self):
+        return self.name
 
 class Lession(models.Model):
-    course = models.ForeignKey(Course, verbose_name=u'课程外键')
+    course = models.ForeignKey(Course, verbose_name=u'课程')
     name = models.CharField(max_length=100, verbose_name=u'章节名称', default=u'')
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
 
@@ -34,7 +36,7 @@ class Lession(models.Model):
 
 
 class Video(models.Model):
-    lession = models.ForeignKey(Lession, verbose_name=u'章节外键')
+    lession = models.ForeignKey(Lession, verbose_name=u'章节')
     name = models.CharField(max_length=100, verbose_name=u'视频名称', default=u'')
     url = models.CharField(max_length=256, verbose_name=u'视频链接', default=u'')
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
@@ -45,7 +47,7 @@ class Video(models.Model):
 
 
 class CourseResource(models.Model):
-    course = models.ForeignKey(Course, verbose_name=u'课程外键')
+    course = models.ForeignKey(Course, verbose_name=u'课程')
     name = models.CharField(max_length=100, verbose_name=u'资源名称', default=u'')
     download = models.FileField(upload_to='courses/resource/%y/%m',max_length=256, verbose_name=u'资源链接', default=u'')
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')

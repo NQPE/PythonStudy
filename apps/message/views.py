@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 # Create your views here.
-from .models import UserMessage
+from message.models import UserMessage
 
 
 def getTest(request):
